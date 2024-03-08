@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fastcamp.boardserver.mapper.UserProfileMapper">
+  <select id="getUserProfile" resultType="com.fastcamp.boardserver.dto.UserDTO">
+      SELECT id, userId, password, nickname, isWithdraw, isAdmin, createTime
+      FROM user
+      WHERE userId = #{userId}
+  </select>
+
+  <insert id="insertUserProfile" parameterType="com.fastcamp.boardserver.dto.UserDTO">
+    INSERT INTO user (userId, password, nickname, isWithdraw, isAdmin)
+    VALUES (#{userId}, #{password}, #{nickname}, #{isWithdraw}, #{isAdmin})
+  </insert>
+
+  <update id="updateUserProfile" parameterType="com.fastcamp.boardserver.dto.UserDTO">
+    UPDATE user
+    SET password=#{password},
+        nickname=#{nickname},
+        isWithdraw=#{isWithdraw},
+        status=#{status}
+    WHERE id = #{id}
+  </update>
+
+  <delete id="deleteUserProfile">
+    DELETE
+    FROM user
+    WHERE id = #{id}
+  </delete>
+
+  <select id="findByIdAndPassword" resultType="com.fastcamp.boardserver.dto.UserDTO">
+    SELECT id, userId, password, nickname, isAdmin, createTime, isWithdraw, status, updateTime
+    FROM user
+    WHERE userId=#{userId} AND password=#{password} and status != 'DELETE'
+  </select>
+
+  <select id="idCheck" resultType="int">
+    SELECT count(id)
+    FROM user
+    WHERE userId = #{userId}
+  </select>
+
+  <update id="updatePassword" parameterType="com.fastcamp.boardserver.dto.UserDTO">
+    UPDATE user
+    SET password=#{password}
+    WHERE userId=#{userId}
+  </update>
+
+  <insert id="register" parameterType="com.fastcamp.boardserver.dto.UserDTO">
+    INSERT INTO user (userId, password, nickname, isAdmin, createTime, isWithdraw, status, updateTime)
+    VALUES (#{userId}, #{password}, #{nickname}, #{isAdmin}, #{createTime}, #{isWithdraw}, #{status}, #{updateTime})
+  </insert>
+</mapper>
