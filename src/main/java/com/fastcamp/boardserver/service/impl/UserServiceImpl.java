@@ -1,5 +1,7 @@
 package com.fastcamp.boardserver.service.impl;
 
+import com.fastcamp.boardserver.aop.LoginCheck;
+import com.fastcamp.boardserver.aop.LoginCheck.UserType;
 import com.fastcamp.boardserver.dto.UserDTO;
 import com.fastcamp.boardserver.exception.DuplicateIdException;
 import com.fastcamp.boardserver.mapper.UserProfileMapper;
@@ -54,12 +56,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(String id, String beforePassword, String afterPassword) {
+    public void updatePassword(String userId, String beforePassword, String afterPassword) {
+
         String encryptedPassword = SHA256Util.encryptionSHA256(beforePassword);
-        UserDTO userProfile = userProfileMapper.findByIdAndPassword(id, encryptedPassword);
+        UserDTO userProfile = userProfileMapper.findByIdAndPassword(userId, encryptedPassword);
 
         if(userProfile == null){
-            log.error("updatePassword ERROR!: {}", id);
+            log.error("updatePassword ERROR!: {}", userId);
             throw new RuntimeException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }
 

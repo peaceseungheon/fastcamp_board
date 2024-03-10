@@ -1,5 +1,7 @@
 package com.fastcamp.boardserver.controller;
 
+import com.fastcamp.boardserver.aop.LoginCheck;
+import com.fastcamp.boardserver.aop.LoginCheck.UserType;
 import com.fastcamp.boardserver.dto.UserDTO;
 import com.fastcamp.boardserver.dto.UserDTO.Status;
 import com.fastcamp.boardserver.dto.request.LoginRequest;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,14 +46,15 @@ public class UserController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request, HttpSession session) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request,
+        HttpSession session) {
         ResponseEntity<LoginResponse> responseEntity = null;
         String id = request.getUserId();
         String password = request.getPassword();
         UserDTO userInfo = userService.login(id, password);
 
         if (userInfo == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND) ;
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
         LoginResponse response = LoginResponse.success(userInfo);
@@ -79,12 +83,13 @@ public class UserController {
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<LoginResponse> updateUserPassword(
-        @RequestBody UserUpdatePasswordRequest request, HttpSession session) {
+    @LoginCheck(type = UserType.USER)
+    public ResponseEntity<LoginResponse> updateUserPassword(String accountId,
+        @RequestBody UserUpdatePasswordRequest request) {
 
         ResponseEntity<LoginResponse> responseEntity;
 
-        String userId = SessionUtil.getLoginMemberId(session);
+        String userId = accountId;
         String beforePassword = request.getBeforePassword();
         String afterPassword = request.getAfterPassword();
 
@@ -107,7 +112,7 @@ public class UserController {
         try {
             userService.deleteId(userId, deletedId.getPassword());
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             log.error("deleteId 실패");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
