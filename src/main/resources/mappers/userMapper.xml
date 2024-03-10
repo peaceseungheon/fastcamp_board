@@ -19,13 +19,13 @@
         nickname=#{nickname},
         isWithdraw=#{isWithdraw},
         status=#{status}
-    WHERE id = #{id}
+    WHERE userId = #{userId}
   </update>
 
   <delete id="deleteUserProfile">
     DELETE
     FROM user
-    WHERE id = #{id}
+    WHERE userId = #{userId}
   </delete>
 
   <select id="findByIdAndPassword" resultType="com.fastcamp.boardserver.dto.UserDTO">

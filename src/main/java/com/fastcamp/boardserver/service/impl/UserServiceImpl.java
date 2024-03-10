@@ -71,9 +71,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteId(String id, String password) {
         String encryptedPassword = SHA256Util.encryptionSHA256(password);
-        UserDTO userProfile = userProfileMapper.findByIdAndPassword(id, password);
+        UserDTO userProfile = userProfileMapper.findByIdAndPassword(id, encryptedPassword);
 
-        if(userProfile != null){
+        if(userProfile == null){
             log.error("deleted ERROR!: {}", id);
             throw new RuntimeException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }

@@ -13,7 +13,7 @@ public interface UserProfileMapper {
         @Param("nickname") String nickname, @Param("isAdmin") boolean isAdmin,
         @Param("createTime") String createTime, @Param("updateTime") String updateTime);
 
-    int deleteUserProfile(@Param("id") String id);
+    int deleteUserProfile(@Param("userId") String userId);
 
     UserDTO findByIdAndPassword(@Param("userId") String userId, @Param("password") String password);
 
