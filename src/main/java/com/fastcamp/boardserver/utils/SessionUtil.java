@@ -16,7 +16,7 @@ public class SessionUtil {
     }
 
     public static String getLoginAdminId(HttpSession session){
-        return (String) session.getAttribute(LOGIN_MEMBER_ID);
+        return (String) session.getAttribute(LOGIN_ADMIN_ID);
     }
 
     public static void setLoginMemberId(HttpSession session, String id){
