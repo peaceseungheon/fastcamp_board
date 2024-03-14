@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fastcamp.boardserver.mapper.PostMapper">
+  <insert id="register" parameterType="com.fastcamp.boardserver.dto.PostDTO">
+    INSERT INTO post (name, isNotice, contents, createTime, views, categoryNo, userNo, updateTime)
+    VALUES (#{name}, #{isNotice}, #{contents}, #{createTime}, #{views}, #{categoryNo}, #{userNo}, #{updateTime})
+  </insert>
+
+  <select id="selectMyPosts" parameterType="Integer" resultType="com.fastcamp.boardserver.dto.PostDTO">
+    SELECT id, name, isNotice, contents, createTime, views, categoryNo, userNo, updateTime
+    FROM post
+    WHERE userNo = #{userNo}
+  </select>
+
+  <update id="updatePosts" parameterType="com.fastcamp.boardserver.dto.PostDTO">
+    UPDATE post
+    SET name = #{name},
+        contents = #{contents},
+        views = #{views},
+        categoryNo = #{categoryNo},
+        userNo = #{userNo},
+        updateTime = #{updateTime}
+    WHERE id = #{id}
+  </update>
+
+  <delete id="deletePosts" parameterType="Integer">
+    DELETE FROM post
+    WHERE id = #{id}
+  </delete>
+</mapper>

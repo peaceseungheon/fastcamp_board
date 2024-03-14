@@ -52,7 +52,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserInfo(String userId) {
-        return userProfileMapper.getUserProfile(userId);
+        UserDTO userProfile = userProfileMapper.getUserProfile(userId);
+        if(userProfile == null){
+            log.error("getUserInfo ERROR {}", userId);
+            throw new RuntimeException("회원정보가 조회되지 않았습니다." + userId);
+        }
+        return userProfile;
     }
 
     @Override
