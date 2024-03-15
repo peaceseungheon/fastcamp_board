@@ -18,7 +18,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 public class LoginCheckAspect {
 
-    @Around("@annotation(com.fastcamp.boardserver.aop.LoginCheck) && @annotation(LoginCheck)")
+    @Around("@annotation(com.fastcamp.boardserver.aop.LoginCheck) && @annotation(loginCheck)")
     public Object adminLoginCheck(ProceedingJoinPoint joinPoint, LoginCheck loginCheck)
         throws Throwable {
         HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest()

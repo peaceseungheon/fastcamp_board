@@ -1,7 +1,5 @@
 package com.fastcamp.boardserver.service.impl;
 
-import com.fastcamp.boardserver.aop.LoginCheck;
-import com.fastcamp.boardserver.aop.LoginCheck.UserType;
 import com.fastcamp.boardserver.dto.UserDTO;
 import com.fastcamp.boardserver.exception.DuplicateIdException;
 import com.fastcamp.boardserver.mapper.UserProfileMapper;
