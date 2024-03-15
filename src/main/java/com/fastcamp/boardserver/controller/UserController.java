@@ -7,6 +7,7 @@ import com.fastcamp.boardserver.dto.UserDTO.Status;
 import com.fastcamp.boardserver.dto.request.LoginRequest;
 import com.fastcamp.boardserver.dto.request.UserDeletedId;
 import com.fastcamp.boardserver.dto.request.UserUpdatePasswordRequest;
+import com.fastcamp.boardserver.dto.response.CommonResponse;
 import com.fastcamp.boardserver.dto.response.LoginResponse;
 import com.fastcamp.boardserver.dto.response.UserInfoResponse;
 import com.fastcamp.boardserver.service.UserService;
@@ -38,11 +39,15 @@ public class UserController {
 
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public void signUp(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<CommonResponse<Integer>> signUp(@RequestBody UserDTO userDTO) {
         if (UserDTO.hasNullDataBeforeRegister(userDTO)) {
             throw new RuntimeException("회원가입 정보를 확인해주세요.");
         }
-        userService.register(userDTO);
+        int complete = userService.register(userDTO);
+
+        CommonResponse<Integer> response = new CommonResponse<>(HttpStatus.OK, "SUCCESS", "회원가입 성공",
+            complete);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/sign-in")
