@@ -6,7 +6,7 @@
     FROM post
     WHERE 1=1
     <if test="name != null and name != ''">
-      AND name LIKE CONCAT(#{name}, '%')
+      AND name LIKE CONCAT('%',#{name}, '%')
     </if>
     <if test="contents != null and contents != ''">
       AND contents LIKE CONCAT(#{contents}, '%')
