@@ -24,4 +24,14 @@
       ORDER BY categoryNo
     </if>
   </select>
+
+  <select id="selectByTagName" parameterType="String" resultType="com.fastcamp.boardserver.dto.PostDTO">
+    SELECT DISTINCT p.id, p.name, p.isNotice, p.contents, p.createTime, p.views, p.categoryNo, p.userNo, p.updateTime
+    FROM post p
+    JOIN post_tag pt
+    ON p.id = pt.postId
+    JOIN tag t
+    ON pt.tagId = t.id
+    WHERE t.name LIKE CONCAT('%', #{tagName}, '%')
+  </select>
 </mapper>

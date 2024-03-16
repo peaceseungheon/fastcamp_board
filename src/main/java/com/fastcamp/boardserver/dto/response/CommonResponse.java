@@ -17,4 +17,8 @@ public class CommonResponse<T> {
     private String message;
     private T responseBody;
 
+    public enum Code {
+        SUCCESS, ERROR
+    }
+
 }

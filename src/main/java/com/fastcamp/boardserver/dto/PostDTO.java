@@ -1,6 +1,7 @@
 package com.fastcamp.boardserver.dto;
 
 import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,9 +19,9 @@ public class PostDTO {
 
     private int id;
 
-    private String  name;
+    private String name;
 
-    private boolean isNotice;
+    private Boolean isNotice;
 
     private String contents;
 
@@ -35,5 +36,7 @@ public class PostDTO {
     private int fileId;
 
     private Date updateTime;
+
+    private List<TagDTO> tagDTOS;
 
 }

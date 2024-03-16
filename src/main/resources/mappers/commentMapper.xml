@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fastcamp.boardserver.mapper.CommentMapper">
+  <insert id="register" parameterType="com.fastcamp.boardserver.dto.CommentDTO">
+    <if test="subCommentNo != 0">
+      INSERT INTO comment (contents, postId, subCommentId)
+      VALUES (#{contents}, #{postNo}, #{subCommentNo})
+    </if>
+    <if test="subCommentNo == 0">
+      INSERT INTO comment (contents, postId)
+      VALUES (#{contents}, #{postNo})
+    </if>
+  </insert>
+
+  <update id="updateComment" parameterType="com.fastcamp.boardserver.dto.CommentDTO">
+    UPDATE comment
+    set contents = #{contents}
+    WHERE id = #{commentNo}
+  </update>
+
+  <delete id="deleteComment" parameterType="int">
+    DELETE FROM comment
+    where id=#{commentNo}
+  </delete>
+</mapper>
