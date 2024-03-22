@@ -39,6 +39,10 @@ public class PostServiceImpl implements PostService {
 
         postMapper.register(postDTO);
 
+        if(postDTO.getTagDTOS() == null){
+            return;
+        }
+
         int postNo = postDTO.getId();
 
         for (TagDTO tagDTO : postDTO.getTagDTOS()) {
